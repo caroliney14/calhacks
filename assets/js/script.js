@@ -48,7 +48,20 @@ $.ajax({
 
 .done(function(data) {
     // Show formatted JSON on webpage.
-    $("#responseTextArea").val(JSON.stringify(data, null, 2));
+    var index = [];
+    // build the index
+    for (var x in data) {
+    index.push(x);
+    }
+    //for(var x in index){
+    //$("#responseTextArea").val(JSON.stringify(data['description']['tags'][0], null, 2));
+    //}
+    var tagData = (JSON.stringify(data['description']['tags'], null, 2)).split(",");
+    //for(i = 0; i<tagData.size(); i++){
+    //    $("#responseTextArea").val(tagData[i]);
+    //}
+    $("#responseTextArea").val(JSON.stringify(data['description']['tags'], null, 2));
+
 })
 
 .fail(function(jqXHR, textStatus, errorThrown) {
