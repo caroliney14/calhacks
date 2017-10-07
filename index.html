@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>My Website</title>
-		<link rel="stylesheet" href="assets/css/style.css">
-		<script src="assets/js/script.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-	</head>
-	<body>
-		<p>This is a paragraph</p>
-		<b><em>Bold text</em></b>
-		<h1>This is a header</h1>
-		<input type=text> Input any text here!</input>
-		<button>Click me!</button>
-		<input type=password>Password</input>
-		<input type=checkbox>Check me!</input>
-		<ol>
-			<li>First element</li>
-			<li>Second element</li>
-			<li>Third element</li>
-		</ol>
-		<div id="box">This is going to be boxy</div>
-		<div class="fancy">Fancy Schmancy</div>
-		<div class="fancy">Another fancy schmancy</div>
+<head>
+    <title>Analyze Sample</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</head>
+<body>
 
-
-	</body>
+<h1>Analyze image:</h1>
+Enter the URL to an image of a natural or artificial landmark, then click the <strong>Analyze image</strong> button.
+<br><br>
+Image to analyze: <input type="text" name="inputImage" id="inputImage" value="http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg" />
+<button onclick="processImage()">Analyze image</button>
+<br><br>
+<div id="wrapper" style="width:1020px; display:table;">
+    <div id="jsonOutput" style="width:600px; display:table-cell;">
+        Response:
+        <br><br>
+        <textarea id="responseTextArea" class="UIInput" style="width:580px; height:400px;"></textarea>
+    </div>
+    <div id="imageDiv" style="width:420px; display:table-cell;">
+        Source image:
+        <br><br>
+        <img id="sourceImage" width="400" />
+    </div>
+</div>
+</body>
 </html>
+
+
+
+
+<!--https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts/javascript-->

@@ -1,61 +1,60 @@
-$(document).ready(function() {
-	//var visionClient = new VisionServiceClient("70228e8d0c50425b97a0c373f9692887");
 
-	function processImage() {
-        // **********************************************
-        // *** Update or verify the following values. ***
-        // **********************************************
+//var visionClient = new VisionServiceClient("70228e8d0c50425b97a0c373f9692887");
 
-        // Replace the subscriptionKey string value with your valid subscription key.
-        var subscriptionKey = "70228e8d0c50425b97a0c373f9692887";
+function processImage() {
+// **********************************************
+// *** Update or verify the following values. ***
+// **********************************************
 
-        // Replace or verify the region.
-        //
-        // You must use the same region in your REST API call as you used to obtain your subscription keys.
-        // For example, if you obtained your subscription keys from the westus region, replace
-        // "westcentralus" in the URI below with "westus".
-        //
-        // NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
-        // a free trial subscription key, you should not need to change this region.
-        var uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze";
+// Replace the subscriptionKey string value with your valid subscription key.
+var subscriptionKey = "70228e8d0c50425b97a0c373f9692887";
 
-        // Request parameters.
-        var params = {
-            "visualFeatures": "Categories,Description,Color",
-            "details": "",
-            "language": "en",
-        };
+// Replace or verify the region.
+//
+// You must use the same region in your REST API call as you used to obtain your subscription keys.
+// For example, if you obtained your subscription keys from the westus region, replace
+// "westcentralus" in the URI below with "westus".
+//
+// NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
+// a free trial subscription key, you should not need to change this region.
+var uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
-        // Display the image.
-        var sourceImageUrl = document.getElementById("inputImage").value;
-        document.querySelector("#sourceImage").src = sourceImageUrl;
+// Request parameters.
+var params = {
+    "visualFeatures": "Categories,Description,Color",
+    "details": "",
+    "language": "en",
+};
 
-        // Perform the REST API call.
-        $.ajax({
-            url: uriBase + "?" + $.param(params),
+// Display the image.
+var sourceImageUrl = document.getElementById("inputImage").value;
+document.querySelector("#sourceImage").src = sourceImageUrl;
 
-            // Request headers.
-            beforeSend: function(xhrObj){
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-            },
+// Perform the REST API call.
+$.ajax({
+    url: uriBase + "?" + $.param(params),
 
-            type: "POST",
+    // Request headers.
+    beforeSend: function(xhrObj){
+        xhrObj.setRequestHeader("Content-Type","application/json");
+        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
 
-            // Request body.
-            data: '{"url": ' + '"' + sourceImageUrl + '"}',
-        })
+    type: "POST",
 
-        .done(function(data) {
-            // Show formatted JSON on webpage.
-            $("#responseTextArea").val(JSON.stringify(data, null, 2));
-        })
+    // Request body.
+    data: '{"url": ' + '"' + sourceImageUrl + '"}',
+})
 
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            // Display error message.
-            var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-            errorString += (jqXHR.responseText === "") ? "" : jQuery.parseJSON(jqXHR.responseText).message;
-            alert(errorString);
-        });
-    };
-}
+.done(function(data) {
+    // Show formatted JSON on webpage.
+    $("#responseTextArea").val(JSON.stringify(data, null, 2));
+})
+
+.fail(function(jqXHR, textStatus, errorThrown) {
+    // Display error message.
+    var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+    errorString += (jqXHR.responseText === "") ? "" : jQuery.parseJSON(jqXHR.responseText).message;
+    alert(errorString);
+});
+};
