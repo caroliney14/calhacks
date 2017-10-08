@@ -7,41 +7,27 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script src="assets/js/script.js"></script>
     </head>
+    <script type="text/javascript">
+        $("#search").click(function() {
+            var query_search = $("#url_search").val();
+            console.log("I was clicked");
+            const params = {
+                url: query_search
+            }
+            document.location = "/results.html?"+$.param(params);
+            // console.log(query_search);
+        });
+    </script>
     <body>
         <div id="titlebg"></div>
         <div id="title">
             <h1>Analyze image</h1>
         </div>
-        <div id="description">Upload a picture to get prices and links to shop...</div>
+        <div id="description">Upload a picture to get prices and links to shop!</div>
         <form action="results.html" method="GET" id="searchbar">
             <input name="url" placeholder="Upload a picture..." id="input" type=text value="" />
             <input type="submit" value="Shop!" id="search" />
         </form>
-
-    <!--
-    Enter the URL to an image of a natural or artificial landmark, then click the <strong>Analyze image</strong> button.
-    <br><br>
-    Image to analyze: <input type="text" name="inputImage" id="inputImage" value="http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg" />
-    <button onclick="processImage()">Analyze image</button>
-    <br><br>
-    <div id="wrapper" style="width:1020px; display:table;">
-        <div id="jsonOutput" style="width:600px; display:table-cell;">
-            Response:
-            <br><br>
-            <textarea id="responseTextArea" class="UIInput" style="width:580px; height:400px;"></textarea>
-        </div>
-        <div id="imageDiv" style="width:420px; display:table-cell;">
-            Source image:
-            <br><br>
-            <img id="sourceImage" width="400" />
-        </div>
-    </div>
-    -->
     <div id="cover"></div>
     </body>
 </html>
-
-
-
-
-<!--https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts/javascript-->
