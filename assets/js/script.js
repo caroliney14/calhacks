@@ -40,30 +40,13 @@ function getProductsHtmlForTag(url, tag) {
             });
             //$("#responseTextArea").html(products_html.join("********<br />"));
             // return products_html.join("********<br />");
-            resolve(products_html.join("<br />"))
+            resolve(products_html.join("<br />"));
         });
     });
 };
 
-
-//var visionClient = new VisionServiceClient("70228e8d0c50425b97a0c373f9692887");
-// **********************************************
-// *** Update or verify the following values. ***
-// **********************************************
-
-// Replace the subscriptionKey string value with your valid subscription key.
-var subscriptionKey = "70228e8d0c50425b97a0c373f9692887";
-// Replace or verify the region.
-//
-// You must use the same region in your REST API call as you used to obtain your subscription keys.
-// For example, if you obtained your subscription keys from the westus region, replace
-// "westcentralus" in the URI below with "westus".
-//
-// NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
-// a free trial subscription key, you should not need to change this region.
-var uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze";
-
 function processImage(sourceImageUrl) {
+    $("#responseTextArea").html("Loading...");
     console.log(`Processing image ${sourceImageUrl}`);
     // Request parameters.
     var params = {
@@ -75,7 +58,9 @@ function processImage(sourceImageUrl) {
     // Display the image.
     // var sourceImageUrl = document.getElementById("inputImage").value;
     document.querySelector("#sourceImage").src = sourceImageUrl;
-
+    var uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze";
+    // Replace the subscriptionKey string value with your valid subscription key.
+    var subscriptionKey = "70228e8d0c50425b97a0c373f9692887";
     // Perform the REST API call.
     $.ajax({
         url: uriBase + "?" + $.param(params),
@@ -89,7 +74,7 @@ function processImage(sourceImageUrl) {
         type: "POST",
 
         // Request body.
-        data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        data: '{"url": ' + '"' + sourceImageUrl + '"}'
     }).done(function(data) {
         console.log(data['description']['tags']);
         const available_tags = ["shirt", "nature"];
@@ -104,7 +89,7 @@ function processImage(sourceImageUrl) {
 
         Promise.all(promises).then(function(results) {
             console.log(results);
-            $("#responseTextArea").append(results);
+            $("#responseTextArea").html(results.join(""));
         });
 
         // $("#responseTextArea").val(JSON.stringify(data['description']['tags'], null, 2));

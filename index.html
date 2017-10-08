@@ -38,7 +38,10 @@
             $("#search").click(function() {
                 var query_search = $("#url_search").val();
                 console.log("I was clicked");
-                document.location = "/results.html?url="+query_search;
+                const params = {
+                    url: query_search
+                }
+                document.location = "/results.html?"+$.param(params);
                 // console.log(query_search);
             });
         </script>
