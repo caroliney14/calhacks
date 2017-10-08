@@ -6,9 +6,14 @@
  * });
  */
 function getCrawlData(url, color, item, callback) {
+    console.log(color); 
+    console.log(item);
+    console.log(url);
     $.ajax({
-        //url: `http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=(site%3Aw${url}%20OR%20cafepress.com)%20${item}`
-        url: 'http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=site%3A${url}%20description%3A%20${color}%20${item}'
+        //url: 'http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=(site%3Aw${url}%20OR%20cafepress.com)%20${item}'
+        //url: 'http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=name%3Aiphone'
+        url: 'http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=description%3A' + color + '%20' + item + '%20site%3A' + url
+        //url: `http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=site%3A${url}%20description%3A%20${color}%20${item}`
     }).done(function(data) {
         callback(data);
     }).fail(function() {
@@ -30,13 +35,14 @@ function getJsonFromUrl() {
 function getProductsHtmlForTag(url, colortag, itemtag) {
     return new Promise(function(resolve, reject) {
         getCrawlData(url, colortag, itemtag, function(data) {
+            //if (data == null) {return;}
             const products_html = data.products.map((product) => {
-                return '<div class="product">
+                return `<div class="product">
                         <div class="productimg"><img src="${product.images[0]}"/></div>
                         <span class="url"><a href=${product.url}>${product.name}</a></span>
                         <span class="price">$${product.price}</span>
                     </div>;
-            '});
+            `});
             //$("#responseTextArea").html(products_html.join("********<br />"));
             // return products_html.join("********<br />");
             resolve(products_html.join("<br />"));
@@ -112,21 +118,22 @@ function processImage(sourceImageUrl) {
         var colortag = null;
         var clothingtag = null;
         const tags_to_use = data['description']['tags'].filter((tag) => {
-            var color = colorText.indexOf(tag.toLowerCase()) != -1 && !used_color;
+            var color = colorText.indexOf(tag.toLowerCase()) != -1 && !colortag;
             if (color) {
-                colortag = tag.toLowerCase;
+                colortag = tag.toLowerCase();
             }
-            var clothes = clothesText.indexOf(tag.toLowerCase())!= -1 && !used_clothing;
+            var clothes = clothesText.indexOf(tag.toLowerCase())!= -1 && !clothingtag;
             if (clothes) {
-                clothingtag = tag.toLowerCase;
+                clothingtag = tag.toLowerCase();
             }
-            return (color || clothes) && tag_length;
+            return;
+            //return (color || clothes) && tag_length;
             //og body: return available_tags.indexOf(tag.toLowerCase()) != -1;
         })
-        console.log(tags_to_use.toString());
-        var html1 = getProductsHtmlForTag("urbanoutfitters.com", colortag, clothintag);
-        var html2 = getProductsHtmlForTag("nike.com", colortag, clothintag);
-        var html3 = getProductsHtmlForTag("lulus.com", colortag, clothintag);
+        console.log(clothingtag);
+        var html1 = getProductsHtmlForTag("urbanoutfitters.com", colortag, clothingtag);
+        var html2 = getProductsHtmlForTag("nike.com", colortag, clothingtag);
+        var html3 = getProductsHtmlForTag("lulus.com", colortag, clothingtag);
         const promises = [html1, html2, html3];
         //const promises = list.join("<br />");
 
