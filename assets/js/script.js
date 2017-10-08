@@ -16,6 +16,10 @@ function getCrawlData(url, color, item, callback) {
         //url: `http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=site%3A${url}%20description%3A%20${color}%20${item}`
     }).done(function(data) {
         callback(data);
+        /*if(data!= null && data.product != null && data.product.description.indexOf(color) != -1 && data.product.description.indexOf(item) != -1){
+            console.log("in the if statement");
+            callback(data);
+        }*/
     }).fail(function() {
         console.log("Error");
     });
@@ -35,17 +39,29 @@ function getJsonFromUrl() {
 function getProductsHtmlForTag(url, colortag, itemtag) {
     return new Promise(function(resolve, reject) {
         getCrawlData(url, colortag, itemtag, function(data) {
-            //if (data == null) {return;}
+            //console.log("data descr" + data.products[0]["description"]);
+            //console.log("data description" + data.products['description']);
+            console.log(data);
+            console.log("in the if statement");
             const products_html = data.products.map((product) => {
-                return `<div class="product">
-                        <div class="productimg"><img src="${product.images[0]}"/></div>
+                //console.log(product);
+                console.log(product['name']);
+                console.log(colortag);
+                console.log(itemtag);
+                if(product != null && product['name'] != null && product['name'].toLowerCase().indexOf(colortag) != -1 && product['name'].toLowerCase().indexOf(itemtag) != -1){
+                    return `<div class="product">
+                        <div class="productimg"><a href=${product.url}><img src="${product.images[0]}"/></a></div>
                         <span class="url"><a href=${product.url}>${product.name}</a></span>
                         <span class="price">$${product.price}</span>
-                    </div>;
-            `});
+                        <div><a href=${product.url}>${product.source.site}</a></div>
+                    </div>;   
+                `}                
+            });
             //$("#responseTextArea").html(products_html.join("********<br />"));
             // return products_html.join("********<br />");
             resolve(products_html.join("<br />"));
+            //}
+            
         });
     });
 };
@@ -111,8 +127,8 @@ function processImage(sourceImageUrl) {
         var clothesText=txt.split("\n");
         var colorText=txt.split("\n");*/
 
-        clothesText = ["shirt", "dress"]
-        colorText = ["red"]
+        clothesText = ["abaya", "anorak", "apron", "ascot", "tie", "ball", "gown", "bandanna", "baseball", "cap", "bathing", "suit", "battledress", "beanie", "bedclothes", "bell-bottoms", "belt", "beret", "Bermuda", "shorts", "bib", "bikini", "blazer", "bloomers", "blouse", "boa", "bonnet", "boot", "bow", "bow", "tie", "boxer", "shorts", "boxers", "bra", "bracelet", "brassiere", "breeches", "briefs", "buckle", "button", "button-down", "shirt", "caftan", "camisole", "camouflage", "cap", "gown", "cape", "capris", "cardigan", "cloak", "coat", "collar", "corset", "costume", "coveralls", "cowboy", "boots", "cowboy", "hat", "cravat", "crown", "cuff", "cuff", "links", "culottes", "cummerbund", "D", "dashiki", "diaper", "dinner", "jacket", "dirndl", "drawers", "dress", "shirt", "duds", "dungarees", "earmuffs", "earrings", "elastic", "evening", "gown", "fedora", "fez", "flak", "jacket", "flannel", "nightgown", "flannel", "shirt", "flip-flops", "formal", "frock", "fur", "coat", "gaiters", "galoshes", "garb", "gabardine", "garment", "garters", "gear", "getup", "gilet", "girdle", "glasses", "gloves", "gown", "halter", "top", "handbag", "handkerchief", "hat", "Hawaiian", "shirt", "hazmat", "suit", "headscarf", "helmet", "hem", "high heels", "hoodie", "hook", "hosiery", "gown", "houndstooth", "housecoat", "jacket", "jeans", "jersey", "jewelry", "jodhpurs", "jumper", "jumpsuit", "kerchief", "khakis", "kilt", "kimono", "kit", "knickers", "lab coat", "lapel", "leather", "jacket", "leggings", "leg warmers", "leotard", "life jacket", "lingerie", "loafers", "loincloth", "longjohns", "long underwear", "miniskirt", "mittens", "moccasins", "muffler", "mumu", "neckerchief", "necklace", "nightgown", "nightshirt", "onesies", "outerwear", "outfit", "overalls", "overcoat", "overshirt", "pajamas", "pants", "pantsuit", "pantyhose", "parka", "pea coat", "peplum", "petticoat", "pinafore", "pleat", "pocket", "pocketbook", "polo shirt", "poncho", "poodle skirt", "porkpie hat", "pullover", "pumps", "purse", "raincoat", "ring", "robe", "rugby", "shirt", "sandals", "sari", "sarong", "scarf", "school", "uniform", "scrubs", "shawl", "sheath", "dress", "shift", "shirt", "shoe", "shorts", "shoulder", "pads", "shrug", "singlet", "skirt", "slacks", "slip", "slippers", "smock", "snaps", "sneakers", "sock", "sombrero", "spacesuit", "Stetson", "hat", "stockings", "stole", "suit", "sunbonnet", "sundress", "sunglasses", "sun", "hat", "suspenders", "sweater", "sweatpants", "sweatshirt", "sweatsuit", "swimsuit", "T-shirt", "tam", "tank", "top", "teddy", "threads", "tiara", "tie", "tie", "clip", "tights", "toga", "togs", "top", "top", "coat", "top", "hat", "train", "trench", "coat", "trunks", "turtleneck", "tutu", "trench", "coat", "trousers", "trunks", "tube", "top", "tunic", "turban", "turtleneck", "shirt", "tux", "tuxedo", "tweed", "jacket", "twill", "twin", "set", "umbrella", "underclothes", "undershirt", "underwear", "uniform", "veil", "Velcro", "vest", "vestments", "visor", "waders", "waistcoat", "wear", "wedding", "gown", "Wellingtons", "wetsuit", "white", "tie", "wig", "windbreaker", "woollens", "wrap", "yoke", "zipper", "zoris"];
+        colorText = ["red", "orange", "yellow", "green", "blue", "purple", "teal", "black", "white", "pink", "brown"]
     
         // available_tags = ["shirt", "nature"];
         var colortag = null;
