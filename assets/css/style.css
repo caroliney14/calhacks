@@ -32,7 +32,7 @@ body {
 	border-radius: 10%;
 }
 
-#input {
+#url_search {
 	width: 80%;
 	height: 30px;
 }
@@ -48,4 +48,23 @@ body {
     display: inline-block;
     width: 80px;
     height: 30px;
+}
+
+.product {
+	width: 200px;
+	border-radius: 10px;
+	border: 1px #333 solid;
+	padding: 10px;
+}
+
+.product .url {
+
+}
+
+.product .name {
+
+}
+
+.product .price {
+
 }

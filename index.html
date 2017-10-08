@@ -5,15 +5,14 @@
         <link rel="stylesheet" href="assets/css/style.css">
         <link href="https://fonts.googleapis.com/css?family=Dancing+Script|PT+Sans+Narrow" rel="stylesheet"> 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script src="assets/js/script.js"></script>
     </head>
     <body>
 
         <div id="title"><h1>Analyze image:</h1></div>
         <div id="description">Upload a picture to get prices and links to shop...</div>
         <div id="searchbar">
-            <input id="input" type=text></input>
-            <button id="search"><a href="results.html">Shop!</a></button>
+            <input id="url_search" type="text" />
+            <button id="search">Shop!</button>
         </div>
 
     <!--
@@ -35,6 +34,14 @@
         </div>
     </div>
     -->
+        <script type="text/javascript">
+            $("#search").click(function() {
+                var query_search = $("#url_search").val();
+                console.log("I was clicked");
+                document.location = "/results.html?url="+query_search;
+                // console.log(query_search);
+            });
+        </script>
     </body>
 </html>
 
