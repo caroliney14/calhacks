@@ -1,0 +1,91 @@
+body {
+	font-size: 36px;
+	background-color: black;
+	text-align: center;
+	width: 100vw;
+	height: 90vh;
+	background-image: url("../img/closet.jpg");
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;	
+	background-repeat: no-repeat;
+	color: pink;
+}
+
+#wrapper {
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	top: 0%;
+	overflow: hidden;
+}
+
+#title {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	height: 50px;
+	width: 100px;
+	font-family: 'Dancing Script', cursive;
+	font-size: 35px;
+	z-index: 2;
+}
+
+#searchresults {
+	position: absolute;
+	background-color: gray;
+	opacity: 0.75;
+	left: 50%;
+	width: 50vw;
+	height: 100vh;
+}
+
+#responseTextArea {
+	font-family: 'PT Sans Narrow', sans-serif;
+	color: pink;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
+}
+
+#origimage {
+	position: absolute;
+	left: 0%;
+	top: 100px;
+	width: 50vw;
+	height: 90vh;
+	max-height: 90vh;
+	overflow: scroll;
+}
+
+#sourceImage {
+	position: absolute;
+	text-align: center;
+	transform: translateY(-50%);
+	transform: translateX(-50%);
+	width: 40vw;
+	max-width: 40vw;
+	border-style: solid;
+	border-color: pink;
+}
+
+.product {
+	width: 200px;
+	border-radius: 10px;
+	border: 1px #33 solid;
+	padding: 10px;
+}
+
+.product .url {
+
+}
+
+.product .name {
+
+}
+
+.product .price {
+
+}
