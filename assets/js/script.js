@@ -27,7 +27,7 @@ var params = {
 };
 
 // Display the image.
-var sourceImageUrl = document.getElementById("inputImage").value;
+var sourceImageUrl = document.getElementById("input").value;
 document.querySelector("#sourceImage").src = sourceImageUrl;
 
 // Perform the REST API call.
@@ -45,6 +45,7 @@ $.ajax({
     // Request body.
     data: '{"url": ' + '"' + sourceImageUrl + '"}',
 })
+
 
 .done(function(data) {
     // Show formatted JSON on webpage.
