@@ -1,5 +1,5 @@
 /* Authors: Elaine Chien, Yannan Tuo, Lance Xing, Caroline Zhou
-Special thanks to Andres Castaneda
+Special thanks to Andres Castaneda and all other Calhacks mentors for their help on the javascript implementations, as well as to our sponsors
 
 Resources:
 https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts/javascript 
