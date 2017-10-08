@@ -11,7 +11,6 @@ body {
 	-o-background-size: cover;
 	background-size: cover;	
 	background-repeat: no-repeat;
-	color: pink;
 	overflow: hidden;
 }
 
@@ -19,7 +18,7 @@ a {
 	text-decoration: none;
 }
 
-a:visited {
+#t:visited {
 	text-decoration: none;
 	color: pink;
 }
@@ -42,13 +41,14 @@ a:visited {
 	height: 200px;
 	width: 100%;
 	font-family: 'Dancing Script', cursive;
+	color: pink;
 	z-index: 2;
 }
 
 #titlebg {
 	position: absolute;
 	top: 26%;
-	height: 300px;
+	height: 350px;
 	width: 100%;
 	font-family: 'Dancing Script', cursive;
 	background-color: black;
@@ -63,6 +63,7 @@ a:visited {
 	height: 100px;
 	width: 100%;
 	font-family: 'PT Sans Narrow', sans-serif;
+	color: pink;
 	z-index: 2;
 }
 
@@ -101,14 +102,25 @@ a:visited {
 	padding: 10px;
 }
 
-.product .url {
-
+#exampletitle {
+	position: absolute;
+	width: 100vw;
+	height: 40px;
+	top: 74%;
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 27px;
+	color: #a5bbe1;
+	z-index: 2;
 }
 
-.product .name {
-
+.example {
+	margin: 20px;
+	text-decoration: underline;
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 26px;
+    z-index: 2;
 }
 
-.product .price {
-
+.notpink {
+	color: #a5bbe1;
 }
