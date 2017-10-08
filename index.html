@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Authors: Yannan Tuo, Caroline Zhou, Elaine Chien, Lance Xing-->
 <html>
     <head>
         <title>ShopNifty</title>
@@ -15,7 +16,6 @@
                 url: query_search
             }
             document.location = "/results.html?"+$.param(params);
-            // console.log(query_search);
         });
     </script>
     <body>
@@ -28,6 +28,7 @@
             <input name="url" placeholder="Upload a picture..." id="input" type=text value="" />
             <input type="submit" value="Shop!" id="search" />
         </form>
+        <div id="examples"><h3>Example Search Queries:</h3></div>
     <div id="cover"></div>
     </body>
 </html>
