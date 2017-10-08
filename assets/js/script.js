@@ -32,8 +32,9 @@ function getProductsHtmlForTag(url, tag) {
             const products_html = data.products.map((product) => {
                 return `
                     <div class="product">
+                        <div class="productimg"><img src="${product.images[0]}"/></div>
                         <span class="url"><a href=${product.url}>${product.name}</a></span>
-                        <span class="price">$${product.price}.00</span>
+                        <span class="price">$${product.price}</span>
                     </div>
                 `;
             });
