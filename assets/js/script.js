@@ -5,9 +5,10 @@
  *   console.log(data);
  * });
  */
-function getCrawlData(url, item, callback) {
+function getCrawlData(url, color, item, callback) {
     $.ajax({
-        url: `http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=(site%3Aw${url}%20OR%20cafepress.com)%20${item}`
+        //url: `http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=(site%3Aw${url}%20OR%20cafepress.com)%20${item}`
+        url: 'http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=site%3A${url}%20description%3A%20${color}%20${item}'
     }).done(function(data) {
         callback(data);
     }).fail(function() {
@@ -26,17 +27,16 @@ function getJsonFromUrl() {
   return result;
 }
 
-function getProductsHtmlForTag(url, tag) {
+function getProductsHtmlForTag(url, colortag, itemtag) {
     return new Promise(function(resolve, reject) {
-        getCrawlData(url, tag, function(data) {
+        getCrawlData(url, colortag, itemtag, function(data) {
             const products_html = data.products.map((product) => {
-                return `
-                    <div class="product">
+                return '<div class="product">
+                        <div class="productimg"><img src="${product.images[0]}"/></div>
                         <span class="url"><a href=${product.url}>${product.name}</a></span>
-                        <span class="price">$${product.price}.00</span>
-                    </div>
-                `;
-            });
+                        <span class="price">$${product.price}</span>
+                    </div>;
+            '});
             //$("#responseTextArea").html(products_html.join("********<br />"));
             // return products_html.join("********<br />");
             resolve(products_html.join("<br />"));
@@ -46,7 +46,7 @@ function getProductsHtmlForTag(url, tag) {
 
 function processImage(sourceImageUrl) {
     $("#responseTextArea").html("Loading...");
-    console.log(`Processing image ${sourceImageUrl}`);
+    console.log('Processing image ${sourceImageUrl}');
     // Request parameters.
     var params = {
         "visualFeatures": "Categories,Description,Color",
@@ -109,34 +109,39 @@ function processImage(sourceImageUrl) {
         colorText = ["red"]
     
         // available_tags = ["shirt", "nature"];
-        var used_color = false;
-        var used_clothing = false;
-        var counter = 0
+        var colortag = null;
+        var clothingtag = null;
         const tags_to_use = data['description']['tags'].filter((tag) => {
             var color = colorText.indexOf(tag.toLowerCase()) != -1 && !used_color;
             if (color) {
-                used_color = true;
-                counter++;
+                colortag = tag.toLowerCase;
             }
             var clothes = clothesText.indexOf(tag.toLowerCase())!= -1 && !used_clothing;
             if (clothes) {
-                used_clothing = true;
-                counter++;
+                clothingtag = tag.toLowerCase;
             }
-            var tag_length = counter < 3;
-            return (color || clothes) && tag_length
+            return (color || clothes) && tag_length;
             //og body: return available_tags.indexOf(tag.toLowerCase()) != -1;
         })
         console.log(tags_to_use.toString());
-        const promises = tags_to_use.map(function(tag) {
-           return getProductsHtmlForTag("macys.com", tag);
-            //var html1 = getProductsHtmlForTag("macys.com", tag);
-            //var html2 = getProductsHtmlForTag("shop.nordstrom", tag);
-            //var html3 = getProductsHtmlForTag("forever21.com", tag);
-            //var list = [html1, html2, html3]
-            //var html2 = getProductsHtmlForTag("", tag);
-            //return list.join("<br />");
-        });
+        var html1 = getProductsHtmlForTag("urbanoutfitters.com", colortag, clothintag);
+        var html2 = getProductsHtmlForTag("nike.com", colortag, clothintag);
+        var html3 = getProductsHtmlForTag("lulus.com", colortag, clothintag);
+        const promises = [html1, html2, html3];
+        //const promises = list.join("<br />");
+
+
+        /*const promises = tags_to_use.map(function(tag) {
+           //return getProductsHtmlForTag("urbanoutfitters.com", tag);
+            //red dress for urban and lulus
+            //black shoes for nike and adidas
+            var html1 = getProductsHtmlForTag("urbanoutfitters.com", tag);
+            var html2 = getProductsHtmlForTag("nike.com", tag);
+            var html3 = getProductsHtmlForTag("lulus.com", tag);
+            var list = html1 + html2 + html3;
+            //var html2 = getProductsHtmlForTag("adidas.com", tag);
+            return list.join("<br />");
+        });*/
 
         Promise.all(promises).then(function(results) {
             console.log(results);
