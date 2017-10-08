@@ -10,6 +10,15 @@ body {
 	-o-background-size: cover;
 	background-size: cover;	
 	background-repeat: no-repeat;
+}
+
+a {
+	text-decoration: none;
+	color: #3a4664;
+}
+
+a:visited {
+	text-decoration: none;
 	color: pink;
 }
 
@@ -21,7 +30,7 @@ body {
 	overflow: hidden;
 }
 
-#title {
+#t {
 	position: absolute;
 	top: 10px;
 	left: 10px;
@@ -29,13 +38,18 @@ body {
 	width: 100px;
 	font-family: 'Dancing Script', cursive;
 	font-size: 35px;
+	color: pink;
 	z-index: 2;
+}
+
+#title:visited { 
+	text-decoration: none;
+	color: pink;
 }
 
 #searchresults {
 	position: absolute;
-	background-color: gray;
-	opacity: 0.75;
+	background-color: rgba(170, 170, 170, 0.75);
 	left: 50%;
 	width: 50vw;
 	height: 100vh;
@@ -43,6 +57,7 @@ body {
 
 #responseTextArea {
 	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 30px;
 	color: pink;
 	position: absolute;
 	width: 100%;
@@ -72,20 +87,6 @@ body {
 }
 
 .product {
-	width: 200px;
-	border-radius: 10px;
-	border: 1px #33 solid;
+	text-align: center;
 	padding: 10px;
-}
-
-.product .url {
-
-}
-
-.product .name {
-
-}
-
-.product .price {
-
 }
