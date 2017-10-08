@@ -52,7 +52,7 @@ body {
 	z-index: 2;
 }
 
-#searchbar {
+#url_search {
 	position: absolute;
 	top: 60%;
 	height: 100px;

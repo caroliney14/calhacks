@@ -77,14 +77,58 @@ function processImage(sourceImageUrl) {
         data: '{"url": ' + '"' + sourceImageUrl + '"}'
     }).done(function(data) {
         console.log(data['description']['tags']);
-        const available_tags = ["shirt", "nature"];
+        //https://stackoverflow.com/questions/34857458/reading-local-text-file-into-a-javascript-array
+        /*
+        var fs = require('fs');
+        fs.readFile("./clothesdict.txt", function(text){
+            var clothesText = text.split("\n");
+        });
+        fs.readFile("./colors.txt", function(text){
+            var colorText = text.split("\n");
+        });
+*/      var clothesText;
+        $.get('clothesdict.txt', function(data) {
+            clothesText = data.split('\n');
+        });
+        console.log(clothesText.toString());
+        var colorText;
+        $.get('colors.txt', function(data) {
+            colorText = data.split('\n');
+        });
+        
+        //var file = event.target.file;
+        /*var reader = new FileReader(); 
+        var clothesTextPre=reader.readAsText("clothesdict.txt");
+        var colorTextPre =reader.readAsText("colors.txt");
+        //varitems=txt.split(",");
+        var clothesText=txt.split("\n");
+        var colorText=txt.split("\n");*/
 
+
+    
+        // available_tags = ["shirt", "nature"];
+        var used_color = false;
+        var used_clothing = false;
         const tags_to_use = data['description']['tags'].filter((tag) => {
-            return available_tags.indexOf(tag.toLowerCase()) != -1;
+            var color = colorText.indexOf(tag.toLowerCase()) != -1 && !used_color;
+            if (color) {
+                used_color = true;
+            }
+            var clothes = clothesText.indexOf(tag.toLowerCase())!= -1 && !used_clothing;
+            if (clothes) {
+                used_clothing = true;
+            }
+            var tag_length = tags_to_use.length < 3;
+            return (color || clothes) && tag_length
+            //og body: return available_tags.indexOf(tag.toLowerCase()) != -1;
         })
-
+        console.log(tags_to_use.toString());
         const promises = tags_to_use.map(function(tag) {
             return getProductsHtmlForTag("walmart.com", tag);
+            /*var html1 = getProductsHtmlForTag("macys.com", tag);
+            var html2 = getProductsHtmlForTag("shop.nordstrom", tag);
+            var html2 = getProductsHtmlForTag("forever21.com", tag);
+            var html2 = getProductsHtmlForTag("", tag);*/
         });
 
         Promise.all(promises).then(function(results) {
@@ -92,7 +136,7 @@ function processImage(sourceImageUrl) {
             $("#responseTextArea").html(results.join(""));
         });
 
-        // $("#responseTextArea").val(JSON.stringify(data['description']['tags'], null, 2));
+        //$("#responseTextArea").html(JSON.stringify(data['description']['tags'], null, 2));
     }).fail(function(jqXHR, textStatus, errorThrown) {
         // Display error message.
         var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
