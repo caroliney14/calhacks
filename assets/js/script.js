@@ -85,15 +85,17 @@ function processImage(sourceImageUrl) {
         fs.readFile("./colors.txt", function(text){
             var colorText = text.split("\n");
         });
-*/      var clothesText;
-        $.get('clothesdict.txt', function(data) {
+        /*
+          var clothesText;
+        $.get('https://github.com/caroliney14/calhacks/blob/master/assets/clothesdict.txt', function(data) {
             clothesText = data.split('\n');
         });
         console.log(clothesText.toString());
         var colorText;
-        $.get('colors.txt', function(data) {
+        $.get('https://github.com/caroliney14/calhacks/blob/master/assets/colors.txt', function(data) {
             colorText = data.split('\n');
         });
+        */
         
         //var file = event.target.file;
         /*var reader = new FileReader(); 
@@ -103,31 +105,37 @@ function processImage(sourceImageUrl) {
         var clothesText=txt.split("\n");
         var colorText=txt.split("\n");*/
 
-
+        clothesText = ["shirt", "dress"]
+        colorText = ["red"]
     
         // available_tags = ["shirt", "nature"];
         var used_color = false;
         var used_clothing = false;
+        var counter = 0
         const tags_to_use = data['description']['tags'].filter((tag) => {
             var color = colorText.indexOf(tag.toLowerCase()) != -1 && !used_color;
             if (color) {
                 used_color = true;
+                counter++;
             }
             var clothes = clothesText.indexOf(tag.toLowerCase())!= -1 && !used_clothing;
             if (clothes) {
                 used_clothing = true;
+                counter++;
             }
-            var tag_length = tags_to_use.length < 3;
+            var tag_length = counter < 3;
             return (color || clothes) && tag_length
             //og body: return available_tags.indexOf(tag.toLowerCase()) != -1;
         })
         console.log(tags_to_use.toString());
         const promises = tags_to_use.map(function(tag) {
-            return getProductsHtmlForTag("walmart.com", tag);
-            /*var html1 = getProductsHtmlForTag("macys.com", tag);
-            var html2 = getProductsHtmlForTag("shop.nordstrom", tag);
-            var html2 = getProductsHtmlForTag("forever21.com", tag);
-            var html2 = getProductsHtmlForTag("", tag);*/
+           return getProductsHtmlForTag("macys.com", tag);
+            //var html1 = getProductsHtmlForTag("macys.com", tag);
+            //var html2 = getProductsHtmlForTag("shop.nordstrom", tag);
+            //var html3 = getProductsHtmlForTag("forever21.com", tag);
+            //var list = [html1, html2, html3]
+            //var html2 = getProductsHtmlForTag("", tag);
+            //return list.join("<br />");
         });
 
         Promise.all(promises).then(function(results) {
