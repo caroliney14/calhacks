@@ -9,7 +9,7 @@ https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameter
 // Calls webhose web scraper API
 function getCrawlData(url, color, item, callback) {
     $.ajax({
-        url: 'http://webhose.io/productFilter?token=ec0657cf-b883-4cb5-a61f-18b5c5a7c4e2&format=json&q=description%3A' + color + '%20' + item + '%20site%3A' + url
+        url: 'http://webhose.io/productFilter?token=4283e46a-25a6-406b-b679-dc7105af2e36&format=json&q=description%3A' + color + '%20' + item + '%20site%3A' + url
     }).done(function(data) {
         callback(data);
     }).fail(function() {
